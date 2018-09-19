@@ -72,7 +72,7 @@ int main( void )
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
 
-	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
+	// Projection matrix : 45Â° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
 	glm::mat4 View       = glm::lookAt(
@@ -266,8 +266,9 @@ int main( void )
 
 		// Draw the triangle !
 		glDrawArrays(GL_TRIANGLES, 0, 12*3); // 12*3 indices starting at 0 -> 12 triangles
-
-											 // 1rst attribute buffer : vertices
+		
+		//Sobrescreve o buffer do cubo pelo buffer da piramide
+		// 1rst attribute buffer : vertices dos triangulos
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexTribuffer);
 		glVertexAttribPointer(
@@ -290,7 +291,7 @@ int main( void )
 			(void*)0                          // array buffer offset
 		);
 
-		glDrawArrays(GL_TRIANGLES, 0, 4*3); // 12*3 indices starting at 0 -> 12 triangles
+		glDrawArrays(GL_TRIANGLES, 0, 4*3); // 4*3 -> 12 vertices
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
@@ -308,8 +309,7 @@ int main( void )
 	glDeleteBuffers(1, &colorbuffer);
 	glDeleteProgram(programID);
 	glDeleteVertexArrays(1, &VertexArrayID);
-
-
+	
 	glDeleteBuffers(1, &vertexTribuffer);
 	glDeleteBuffers(1, &colorTribuffer);
 
