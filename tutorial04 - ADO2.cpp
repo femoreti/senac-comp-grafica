@@ -82,8 +82,10 @@ int main( void )
 						   );
 	// Model matrix : an identity matrix (model will be at the origin)
 	glm::mat4 Model      = glm::mat4(1.0f);
+	glm::mat4 Model2	 = glm::mat4(1.0f);
 	// Our ModelViewProjection : multiplication of our 3 matrices
 	glm::mat4 MVP        = Projection * View * Model; // Remember, matrix multiplication is the other way around
+	glm::mat4 MVP2 = Projection * View * Model2; // Remember, matrix multiplication is the other way around
 
 	// Our vertices. Tree consecutive floats give a 3D vertex; Three consecutive vertices give a triangle.
 	// A cube has 6 faces with 2 triangles each, so this makes 6*2=12 triangles, and 12*3 vertices
@@ -224,15 +226,12 @@ int main( void )
 
 	//End TRI
 
-	int time = 0;
 	do{
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		Model = glm::rotate(Model, glm::radians(1.0f), glm::vec3(0, 1, 0));
 		MVP = Projection * View * Model; // Remember, matrix multiplication is the other way around
-
-		time++;
 
 		// Use our shader
 		glUseProgram(programID);
@@ -266,9 +265,15 @@ int main( void )
 
 		// Draw the triangle !
 		glDrawArrays(GL_TRIANGLES, 0, 12*3); // 12*3 indices starting at 0 -> 12 triangles
-		
-		//Sobrescreve o buffer do cubo pelo buffer da piramide
-		// 1rst attribute buffer : vertices dos triangulos
+
+
+		Model2 = glm::rotate(Model2, glm::radians(1.0f), glm::vec3(0, -1, 0));
+		MVP2 = Projection * View * Model2; // Remember, matrix multiplication is the other way around
+
+
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP2[0][0]);
+
+		// 1rst attribute buffer : vertices
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexTribuffer);
 		glVertexAttribPointer(
@@ -291,7 +296,7 @@ int main( void )
 			(void*)0                          // array buffer offset
 		);
 
-		glDrawArrays(GL_TRIANGLES, 0, 4*3); // 4*3 -> 12 vertices
+		glDrawArrays(GL_TRIANGLES, 0, 4*3); // 12*3 indices starting at 0 -> 12 triangles
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
@@ -309,7 +314,8 @@ int main( void )
 	glDeleteBuffers(1, &colorbuffer);
 	glDeleteProgram(programID);
 	glDeleteVertexArrays(1, &VertexArrayID);
-	
+
+
 	glDeleteBuffers(1, &vertexTribuffer);
 	glDeleteBuffers(1, &colorTribuffer);
 
@@ -318,4 +324,3 @@ int main( void )
 
 	return 0;
 }
-
