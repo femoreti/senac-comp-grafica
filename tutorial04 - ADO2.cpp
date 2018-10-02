@@ -127,9 +127,17 @@ int main( void )
 		-1.0f, 1.0f, 1.0f,
 		 1.0f,-1.0f, 1.0f
 	};
-
+	
+	static GLfloat g_color_buffer_data[12*3*3];
+	for (int i = 0; i < 12*3; i++)
+	{
+		g_color_buffer_data[3*i+0] = ((float)(rand() % 10+1)) / 10.0f;
+		g_color_buffer_data[3*i+1] = ((float)(rand() % 10+1)) / 10.0f;
+		g_color_buffer_data[3*i+2] = ((float)(rand() % 10+1)) / 10.0f;
+	}
+	
 	// One color for each vertex. They were generated randomly.
-	static const GLfloat g_color_buffer_data[] = { 
+	/*static const GLfloat g_color_buffer_data[] = { 
 		0.583f,  0.771f,  0.014f,
 		0.609f,  0.115f,  0.436f,
 		0.327f,  0.483f,  0.844f,
@@ -166,7 +174,7 @@ int main( void )
 		0.673f,  0.211f,  0.457f,
 		0.820f,  0.883f,  0.371f,
 		0.982f,  0.099f,  0.879f
-	};
+	};*/
 
 	GLuint vertexbuffer;
 	glGenBuffers(1, &vertexbuffer);
@@ -177,7 +185,7 @@ int main( void )
 	glGenBuffers(1, &colorbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
-
+	
 	//Triangulo
 	static const GLfloat g_vertexTri_buffer_data[] = {
 		-1.0f, 1.0f,-1.0f,
@@ -197,21 +205,21 @@ int main( void )
 		0.0f, 2.0f, 0.0f
 	};
 	static const GLfloat g_colorTri_buffer_data[] = {
-		0.25f, 0.25f,0.25f,
-		0.567f,0.567f, 0.567f,
-		0.8f, 0.8f, 0.8f,
+		1.0f, 0.0f,0.0f,
+		1.0f, 0.0f,0.0f,
+		1.0f, 0.0f,0.0f,
 
-		0.25f, 0.25f,0.25f,
-		0.567f,0.567f, 0.567f,
-		0.8f, 0.8f, 0.8f,
+		0.0f, 1.0f,0.0f,
+		0.0f, 1.0f,0.0f,
+		0.0f, 1.0f,0.0f,
 
-		0.25f, 0.25f,0.25f,
-		0.567f,0.567f, 0.567f,
-		0.8f, 0.8f, 0.8f,
+		0.0f, 0.0f,1.0f,
+		0.0f, 0.0f,1.0f,
+		0.0f, 0.0f,1.0f,
 
-		0.25f, 0.25f,0.25f,
-		0.567f,0.567f, 0.567f,
-		0.8f, 0.8f, 0.8f
+		1.0f, 0.0f,1.0f,
+		1.0f, 0.0f,1.0f,
+		1.0f, 0.0f,1.0f,
 	};
 
 	GLuint vertexTribuffer;
