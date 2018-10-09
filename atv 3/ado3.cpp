@@ -85,7 +85,7 @@ int main( void )
 
 	// Load the texture
 	//GLuint Texture = loadDDS("uvtemplate.DDS");
-	GLuint Texture = loadBMP_custom("B7Y0s.bmp");
+	GLuint Texture = loadBMP_custom("text.bmp");
 	
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureID  = glGetUniformLocation(programID, "myTextureSampler");
