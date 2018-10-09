@@ -159,12 +159,19 @@ void RandomDice()
 	{
 		timerCountDown -= deltaTime;
 
-		x = ((float)(rand() % 10 + 1)) / 10.0f;
-		y = ((float)(rand() % 10 + 1)) / 10.0f;
-		z = ((float)(rand() % 10 + 1)) / 10.0f;
+		if (timerCountDown > 1.0f)
+		{
+			x = ((float)(rand() % 10 + 1)) / 10.0f;
+			y = ((float)(rand() % 10 + 1)) / 10.0f;
+			z = ((float)(rand() % 10 + 1)) / 10.0f;
+		}
+		else
+		{
+			
+		}
 
 		//roll dice
-		ModelMatrix = glm::rotate(ModelMatrix, glm::radians(25.0f), glm::vec3(x, y, z));
+		ModelMatrix = glm::rotate(ModelMatrix, glm::radians(10.0f * timerCountDown), glm::vec3(x, y, z));
 	}
 
 	// For the next frame, the "last time" will be "now"
